@@ -13,8 +13,10 @@
 
       const graph = new G6.Graph({
         container: 'mountNode', // String | HTMLElement, required, the id of DOM element or an HTML node
-        width: 800, // Number, required, the width of the graph
-        height: 500, // Number, required, the height of the graph
+        width: 1200, // Number, required, the width of the graph
+        height: 800, // Number, required, the height of the graph
+        fitView: true,
+        fitViewPadding: [20, 40, 50, 20],
       });
       const main = async () => {
         const response = await fetch(
