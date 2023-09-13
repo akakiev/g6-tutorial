@@ -10,43 +10,22 @@
     <script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.3.11/dist/g6.min.js"></script> 
 
     <script>
-      //console.log("I am using:");
-      //console.log(G6.Global.version);
-      const initData = {
-      // The array of nodes
-      nodes: [
-        {
-          id: 'node1', // String, unique and required
-          x: 100, // Number, the x coordinate
-          y: 200, // Number, the y coordinate
-          label: 'Source', // The label of the node
-        },
-        {
-          id: 'node2',
-          x: 300,
-          y: 200,
-          label: 'Target',
-        },
-      ],
-      // The array of edges
-      edges: [
-      // An edge links from node1 to node2
-        {
-          source: 'node1', // String, required, the id of the source node
-          target: 'node2', // String, required, the id of the target node
-          label: 'I am an edge', // The label of the edge
-        },
-      ],
-      };
 
       const graph = new G6.Graph({
         container: 'mountNode', // String | HTMLElement, required, the id of DOM element or an HTML node
         width: 800, // Number, required, the width of the graph
         height: 500, // Number, required, the height of the graph
       });
+      const main = async () => {
+        const response = await fetch(
+          'https://gw.alipayobjects.com/os/basement_prod/6cae02ab-4c29-44b2-b1fd-4005688febcb.json',
+        );
+        const remoteData = await response.json();
 
-      graph.data(initData);
-      graph.render();
+        graph.data(remoteData);
+        graph.render();
+      };
+      main();
     </script>
   </body>
 </html>
