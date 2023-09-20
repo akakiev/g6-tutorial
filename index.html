@@ -15,8 +15,8 @@
         container: 'mountNode', // String | HTMLElement, required, the id of DOM element or an HTML node
         width: 1200, // Number, required, the width of the graph
         height: 800, // Number, required, the height of the graph
-        fitView: true,
-        fitViewPadding: [20, 40, 50, 20],
+        //fitView: true,
+        //fitViewPadding: [20, 40, 50, 20],
 
         defaultNode: {
           size: 30, // The size of nodes
@@ -78,7 +78,7 @@
           edge.style.opacity = 0.6;
           edge.style.stroke = 'grey';
         });
-        
+
         graph.data(remoteData);
         graph.render();
       };
