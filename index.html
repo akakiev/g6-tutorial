@@ -29,6 +29,17 @@
             },
           },
         },
+        nodeStateStyles: {
+          // The node style when the state 'hover' is true
+          hover: {
+            fill: 'lightsteelblue',
+          },
+          // The node style when the state 'click' is true
+          click: {
+            stroke: '#000',
+            lineWidth: 3,
+          },
+        },
         // The style properties and other properties for all the edges in the default state
         defaultEdge: {
           // ...                 // The other properties
@@ -37,12 +48,22 @@
             autoRotate: true, // Whether to rotate the label according to the edges
           },
         },
+        edgeStateStyles: {
+          // The edge style when the state 'click' is true
+          click: {
+            stroke: 'steelblue',
+          },
+        },
         layout: {                // Object, layout configuration. random by default
           type: 'force',         // Force layout
           preventOverlap: true,  // Prevent node overlappings
           linkDistance: 100,
           // nodeSize: 30        
         },
+        modes: {
+          default: ['drag-canvas', 'zoom-canvas'], // Allow users to drag canvas, zoom canvas, and drag nodes
+          edit: []
+        }
       });
       const main = async () => {
         const response = await fetch(
@@ -86,6 +107,40 @@
 
         graph.data(remoteData);
         graph.render();
+
+        // Mouse enter a node
+        graph.on('node:mouseenter', (e) => {
+          const nodeItem = e.item; // Get the target item
+          graph.setItemState(nodeItem, 'hover', true); // Set the state 'hover' of the item to be true
+        });
+
+        // Mouse leave a node
+        graph.on('node:mouseleave', (e) => {
+          const nodeItem = e.item; // Get the target item
+          graph.setItemState(nodeItem, 'hover', false); // Set the state 'hover' of the item to be false
+        });
+
+        // Click a node
+        graph.on('node:click', (e) => {
+          // Swich the 'click' state of the node to be false
+          const clickNodes = graph.findAllByState('node', 'click');
+          clickNodes.forEach((cn) => {
+            graph.setItemState(cn, 'click', false);
+          });
+          const nodeItem = e.item; // et the clicked item
+          graph.setItemState(nodeItem, 'click', true); // Set the state 'click' of the item to be true
+        });
+
+        // Click an edge
+        graph.on('edge:click', (e) => {
+          // Swich the 'click' state of the edge to be false
+          const clickEdges = graph.findAllByState('edge', 'click');
+          clickEdges.forEach((ce) => {
+            graph.setItemState(ce, 'click', false);
+          });
+          const edgeItem = e.item; // Get the clicked item
+          graph.setItemState(edgeItem, 'click', true); // Set the state 'click' of the item to be true
+        });
       };
       main();
     </script>
